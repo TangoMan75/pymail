@@ -92,14 +92,29 @@ class Email:
         message = ''
         if self._raw.is_multipart():
             for payload in self._raw.get_payload():
-                message += payload.get_payload()
+                get_payload = payload.get_payload()
+                if isinstance(get_payload, list):
+                    for temp_payload in get_payload:
+                        message += temp_payload
+                else:
+                    message += get_payload
         else:
             message = self._raw.get_payload()
+
         # decode base64 encoded message
         if self._raw['Content-Transfer-Encoding'] == 'base64':
-            message = b64decode(message)
+            try:
+                message = b64decode(message)
+            except Exception as e:
+                pass
+
         # decode MIME quoted-printable data
-        return decodestring(message)
+        try:
+            message = decodestring(message)
+        except Exception as e:
+            pass
+
+        return message
 
     ##################################################
 

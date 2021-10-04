@@ -19,7 +19,7 @@ setup(
     author='Matthias Morin',
     author_email='mat@tangoman.io',
     packages=['pymail'],
-    version='0.1.0',
+    version='0.2.0',
     license='MIT',
     description='Email analyzer',
     long_description=open('README.md').read(),
